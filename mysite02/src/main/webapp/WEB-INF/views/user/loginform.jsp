@@ -1,7 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%
-	String email = (String) request.getAttribute("email");
+	String email = (String)request.getAttribute("email");
 %>
 <!doctype html>
 <html>
@@ -21,8 +20,8 @@
 					<input id="email" name="email" type="text" value='<%=(email == null ? "" : email) %>'>
 					<label class="block-label" >패스워드</label>
 					<input name="password" type="password" value="">
-					<% 
-						if (null != email) {
+					<%
+						if(null != email) {
 					%>
 						<p>
 							로그인이 실패 했습니다.
