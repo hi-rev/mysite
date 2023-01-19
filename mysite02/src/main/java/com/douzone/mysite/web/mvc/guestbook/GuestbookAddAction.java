@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.douzone.mysite.dao.GuestBookDao;
 import com.douzone.mysite.vo.GuestBookVo;
 import com.douzone.web.mvc.Action;
+import com.douzone.web.util.MvcUtil;
 
 public class GuestbookAddAction implements Action {
 
@@ -33,7 +34,7 @@ public class GuestbookAddAction implements Action {
 		vo.setRegDate(formatter.format(today));
 		
 		new GuestBookDao().insert(vo);
-		response.sendRedirect(request.getContextPath() + "/guestbook");
+		MvcUtil.redirect(request.getContextPath() + "/guestbook", request, response);
 	}
 
 }
