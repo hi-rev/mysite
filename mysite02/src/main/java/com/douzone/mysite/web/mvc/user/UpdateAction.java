@@ -13,20 +13,16 @@ import com.douzone.web.mvc.Action;
 import com.douzone.web.util.MvcUtil;
 
 public class UpdateAction implements Action {
-
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// Access Control(접근 제어)
+		// Access Control(보안, 인증체크)
 		HttpSession session = request.getSession();
-		if(session == null) {
-			MvcUtil.redirect(request.getContextPath(), request, response);
-			return;
-		}
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		if(authUser == null) {
 			MvcUtil.redirect(request.getContextPath(), request, response);
 			return;
 		}
+		//////////////////////////////////////////////////////
 		
 		String name = request.getParameter("name");
 		String password = request.getParameter("password");
@@ -36,12 +32,11 @@ public class UpdateAction implements Action {
 		vo.setName(name);
 		vo.setPassword(password);
 		vo.setGender(gender);
-		
+		vo.setNo(authUser.getNo());
+
 		new UserDao().update(vo);
 		authUser.setName(name);
 		
-		// update 후 다시 updateform 으로
 		MvcUtil.redirect(request.getContextPath() + "/user?a=updateform", request, response);
 	}
-
 }

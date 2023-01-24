@@ -18,14 +18,16 @@ public class UpdateFormAction implements Action {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Access Control(보안, 인증체크)
 		HttpSession session = request.getSession();
-		UserVo authUser = (UserVo)session.getAttribute("authUser"); 
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		if(authUser == null) {
 			MvcUtil.redirect(request.getContextPath(), request, response);
 			return;
 		}
+		//////////////////////////////////////////////////////
 		
-		UserVo userVo = new UserDao().findByNo(authUser.getNo());
-		  
+		Long no = authUser.getNo();
+		UserVo userVo = new UserDao().findByNo(no);
+		
 		request.setAttribute("userVo", userVo);
 		MvcUtil.forward("user/updateform", request, response);
 	}
