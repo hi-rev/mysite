@@ -33,7 +33,7 @@
 							<td>${count - status.index}</td>
 							<td style="text-align:left; padding-left: 20px">
 								
-								<a href="">${vo.title }</a>
+								<a href="${pageContext.request.contextPath }/board?a=viewform&no=${vo.no}">${vo.title }</a>
 							</td>
 							<td>${vo.name }</td>
 							<td>${vo.hit }</td>

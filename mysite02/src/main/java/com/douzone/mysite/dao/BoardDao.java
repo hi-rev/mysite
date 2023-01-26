@@ -104,6 +104,56 @@ public class BoardDao {
 		}		
 	}
 	
+	public BoardVo findByNo(BoardVo vo) {
+		BoardVo result = null;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = getConnection();
+			
+			String sql ="select no, title, contents from board where no = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setLong(1, vo.getNo());
+			
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = new BoardVo();
+				
+				Long no = rs.getLong(1);
+				String title = rs.getString(2);
+				String contents = rs.getString(3);
+				
+				result.setNo(no);
+				result.setTitle(title);
+				result.setContents(contents);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			try {
+				if(rs != null) {
+					rs.close();
+				}
+				
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
+	}
+	
 	private Connection getConnection() throws SQLException {
 		Connection conn = null;
 
@@ -118,4 +168,5 @@ public class BoardDao {
 		
 		return conn;
 	}
+
 }
