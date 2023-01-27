@@ -8,9 +8,11 @@ import java.util.Locale;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.douzone.mysite.dao.BoardDao;
 import com.douzone.mysite.vo.BoardVo;
+import com.douzone.mysite.vo.UserVo;
 import com.douzone.web.mvc.Action;
 import com.douzone.web.util.MvcUtil;
 
@@ -18,6 +20,14 @@ public class WriteAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// Access Control(보안, 인증체크)
+		HttpSession session = request.getSession();
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		if(authUser == null) {
+			MvcUtil.redirect(request.getContextPath(), request, response);
+			return;
+		}
+
 		// 제목 & 내용
 		String title = request.getParameter("title");
 		String contents = request.getParameter("content");
@@ -36,7 +46,7 @@ public class WriteAction implements Action {
 		vo.setgNo(1L);
 		vo.setoNo(1L);
 		vo.setDepth(0L);
-		vo.setUserNo(1L);
+		vo.setUserNo(authUser.getNo()); // 현재 로그인 한 사용자
 		
 		new BoardDao().insert(vo);
 		MvcUtil.redirect(request.getContextPath() + "/board", request, response);

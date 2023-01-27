@@ -114,7 +114,7 @@ public class BoardDao {
 		try {
 			conn = getConnection();
 			
-			String sql ="select no, title, contents from board where no = ?";
+			String sql ="select no, title, contents, user_no from board where no = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setLong(1, vo.getNo());
 			
@@ -125,10 +125,12 @@ public class BoardDao {
 				Long no = rs.getLong(1);
 				String title = rs.getString(2);
 				String contents = rs.getString(3);
+				Long userNo = rs.getLong(4);
 				
 				result.setNo(no);
 				result.setTitle(title);
 				result.setContents(contents);
+				result.setUserNo(userNo);
 			}
 			
 		} catch (SQLException e) {
