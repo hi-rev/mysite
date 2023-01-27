@@ -42,10 +42,6 @@ public class WriteAction implements Action {
 		String pattern = "yyyyMMddHHmmss";
 		SimpleDateFormat formatter = new SimpleDateFormat(pattern, currentLocale);
 		vo.setRegDate(formatter.format(today));
-		
-		vo.setgNo(1L);
-		vo.setoNo(1L);
-		vo.setDepth(0L);
 		vo.setUserNo(authUser.getNo()); // 현재 로그인 한 사용자
 		
 		new BoardDao().insert(vo);

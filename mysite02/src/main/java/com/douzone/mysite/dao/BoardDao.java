@@ -75,15 +75,12 @@ public class BoardDao {
 		try {
 			conn = getConnection();
 			
-			String sql = "insert into board values (null, ?, ?, ?, now(), ?, ?, ?, ?)";
+			String sql = "insert into board values (null, ?, ?, ?, now(), (select ifnull(max(g_no) + 1, 1) from board as b), 1, 0, ?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getTitle());
 			pstmt.setString(2, vo.getContents());
 			pstmt.setLong(3, vo.getHit());
-			pstmt.setLong(4, vo.getgNo());
-			pstmt.setLong(5, vo.getoNo());
-			pstmt.setLong(6, vo.getDepth());
-			pstmt.setLong(7, vo.getUserNo());
+			pstmt.setLong(4, vo.getUserNo());
 			
 			pstmt.executeUpdate();
 			

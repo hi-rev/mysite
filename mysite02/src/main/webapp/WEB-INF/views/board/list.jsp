@@ -38,7 +38,9 @@
 							<td>${vo.name }</td>
 							<td>${vo.hit }</td>
 							<td>${vo.regDate }</td>
-							<td><a href="${pageContext.request.contextPath }/board?a=delete&no=${vo.no}" class="del"></a></td> 
+							<c:if test="${authUser.no eq vo.userNo }">
+								<td><a href="${pageContext.request.contextPath }/board?a=delete&no=${vo.no}" class="del"></a></td> 
+							</c:if>
 						</tr>
 					</c:forEach>
 				</table>
