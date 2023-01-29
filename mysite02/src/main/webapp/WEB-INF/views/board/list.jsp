@@ -31,8 +31,10 @@
 					<c:forEach items="${list }" var="vo" varStatus="status" >
 						<tr>
 							<td>${count - status.index}</td>
-							<td style="text-align:left; padding-left: 20px">
-								
+							<td style="text-align:left; padding-left: ${vo.depth*10}px">
+								<c:if test="${vo.depth > 0 }">
+									<img src="${pageContext.request.contextPath }/assets/images/reply.png">
+								</c:if>
 								<a href="${pageContext.request.contextPath }/board?a=viewform&no=${vo.no}">${vo.title }</a>
 							</td>
 							<td>${vo.name }</td>
@@ -49,8 +51,8 @@
 				<div class="pager">
 					<ul>
 						<li><a href="">◀</a></li>
-						<li><a href="">1</a></li>
-						<li class="selected">2</li>
+						<li class="selected"><a href="">1</a></li>
+						<li><a href="">2</a></li>
 						<li><a href="">3</a></li>
 						<li>4</li>
 						<li>5</li>
