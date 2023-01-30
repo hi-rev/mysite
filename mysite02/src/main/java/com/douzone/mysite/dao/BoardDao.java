@@ -12,7 +12,7 @@ import com.douzone.mysite.vo.BoardVo;
 
 public class BoardDao {
 	
-	public List<BoardVo> findAll() {
+	public List<BoardVo> findAll(int begin, int end) {
 		List<BoardVo> result = new ArrayList<>();
 		
 		Connection conn = null;
@@ -25,8 +25,11 @@ public class BoardDao {
 			String sql ="select a.no, a.title, a.contents, a.hit, a.reg_date, a.g_no, a.o_no, a.depth, a.user_no, b.name " +
 								"	from board a, user b	" +
 								"	where a.user_no = b.no" +
-								"   order by g_no desc, o_no asc";
+								"   order by g_no desc, o_no asc" +
+								"	limit ?, ?";
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, begin);
+			pstmt.setInt(2, end);
 
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
@@ -263,7 +266,7 @@ public class BoardDao {
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
 			
-			String url = "jdbc:mariadb://172.30.1.33:3307/webdb?charset=utf8";
+			String url = "jdbc:mariadb://172.30.1.60:3307/webdb?charset=utf8";
 			conn = DriverManager.getConnection(url, "webdb", "webdb");
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패:" + e);

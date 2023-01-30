@@ -25,7 +25,10 @@ public class ListAction implements Action {
 			return;
 		}
 		
-		List<BoardVo> list = new BoardDao().findAll();
+		String pageStr = request.getParameter("page");
+		int page = Integer.parseInt(pageStr);
+		
+		List<BoardVo> list = new BoardDao().findAll((page-1)*5, (page-1)*5 + 5);
 		request.setAttribute("list", list);
 		request.setAttribute("authUser", authUser);
 		
