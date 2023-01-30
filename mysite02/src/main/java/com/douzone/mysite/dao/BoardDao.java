@@ -24,7 +24,8 @@ public class BoardDao {
 			
 			String sql ="select a.no, a.title, a.contents, a.hit, a.reg_date, a.g_no, a.o_no, a.depth, a.user_no, b.name " +
 								"	from board a, user b	" +
-								"	where a.user_no = b.no";
+								"	where a.user_no = b.no" +
+								"   order by g_no desc, o_no asc";
 			pstmt = conn.prepareStatement(sql);
 
 			rs = pstmt.executeQuery();
@@ -111,7 +112,7 @@ public class BoardDao {
 		try {
 			conn = getConnection();
 			
-			String sql ="select no, title, contents, user_no from board where no = ?";
+			String sql ="select no, title, contents, user_no, g_no, o_no, depth from board where no = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setLong(1, vo.getNo());
 			
@@ -123,11 +124,17 @@ public class BoardDao {
 				String title = rs.getString(2);
 				String contents = rs.getString(3);
 				Long userNo = rs.getLong(4);
+				Long gNo = rs.getLong(5);
+				Long oNo = rs.getLong(6);
+				Long depth = rs.getLong(7);
 				
 				result.setNo(no);
 				result.setTitle(title);
 				result.setContents(contents);
 				result.setUserNo(userNo);
+				result.setgNo(gNo);
+				result.setoNo(oNo);
+				result.setDepth(depth);
 			}
 			
 		} catch (SQLException e) {
@@ -213,13 +220,50 @@ public class BoardDao {
 		}		
 	}
 	
+	public void insertReply(BoardVo vo) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = getConnection();
+			
+			String sql = "insert into board values (null, ?, ?, ?, now(), ?, (select max(o_no) + 1 from board as b where g_no=?), ?, ?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getTitle());
+			pstmt.setString(2, vo.getContents());
+			pstmt.setLong(3, vo.getHit());
+			pstmt.setLong(4, vo.getgNo());
+			pstmt.setLong(5, vo.getgNo());
+			pstmt.setLong(6, vo.getDepth());
+			pstmt.setLong(7, vo.getUserNo());
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("Error:" + e);
+		} finally {
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}	
+	}
+
+	
 	private Connection getConnection() throws SQLException {
 		Connection conn = null;
 
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
 			
-			String url = "jdbc:mariadb://192.168.10.106:3307/webdb?charset=utf8";
+			String url = "jdbc:mariadb://172.30.1.33:3307/webdb?charset=utf8";
 			conn = DriverManager.getConnection(url, "webdb", "webdb");
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패:" + e);
@@ -227,5 +271,4 @@ public class BoardDao {
 		
 		return conn;
 	}
-
 }
