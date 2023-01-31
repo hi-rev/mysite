@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 import org.springframework.stereotype.Repository;
 
+import com.douzone.mysite.exception.UserRepositoryException;
 import com.douzone.mysite.vo.UserVo;
 
 @Repository
@@ -72,7 +73,7 @@ public class UserRepository {
 				result.setName(name);
 			}
 		} catch (SQLException e) {
-			System.out.println("Error:" + e);
+			throw new UserRepositoryException(e.toString());
 		} finally {
 			try {
 				if(rs != null) {

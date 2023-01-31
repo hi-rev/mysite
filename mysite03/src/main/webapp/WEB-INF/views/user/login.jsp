@@ -11,12 +11,12 @@
 </head>
 <body>
 	<div id="container">
-		<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
+		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="user">
 				<form id="login-form" name="loginform" method="post" action="${pageContext.request.contextPath }/user/login">
 					<label class="block-label" for="email">이메일</label>
-					<input id="email" name="email" type="text" value='${email }'> <!-- jstl에서는 email이 null이면 안찍힘 -->
+					<input id="email" name="email" type="text" value='${email }'>
 					<label class="block-label" >패스워드</label>
 					<input name="password" type="password" value="">
 					<c:if test="${not empty email }">
@@ -28,8 +28,8 @@
 				</form>
 			</div>
 		</div>
-		<c:import url="/WEB-INF/views/includes/navigation.jsp"></c:import>
-		<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
+		<c:import url="/WEB-INF/views/includes/navigation.jsp" />
+		<c:import url="/WEB-INF/views/includes/footer.jsp" />
 	</div>
 </body>
 </html>
