@@ -30,12 +30,12 @@
 					</table>
 				</form>
 				<ul>
-				<c:set var="count" value="${fn:length(list) }" />
+				<c:set var="count" value="1" />
 				<c:forEach items="${list }" var="vo" varStatus="status" >
 					<li>
 						<table>
 							<tr>
-								<td>[${count - status.index}]</td>
+								<td>[${count}]</td>
 								<td>${vo.name }</td>
 								<td>${vo.regDate }</td>
 								<td><a href="${pageContext.request.contextPath }/guestbook/delete/${vo.no}">삭제</a></td>
@@ -47,7 +47,8 @@
 							</tr>
 						</table>
 						<br>
-					</li>				
+					</li>
+					<c:set var="count" value="${count+1 }" />				
 				</c:forEach>
 				</ul>
 			</div>
