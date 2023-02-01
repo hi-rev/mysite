@@ -22,7 +22,7 @@ public class GuestBookService {
 	}
 	
 	public void deleteMessage(Long no, String password) {
-		guestbookRepository.deleteByEmail(no, password);
+		guestbookRepository.deleteByNoAndPassword(no, password);
 	}
 	
 }

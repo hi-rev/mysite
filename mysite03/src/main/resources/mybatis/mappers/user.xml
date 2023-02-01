@@ -2,13 +2,45 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="user">
-	<select id="findByEmailAndPassword" resultType="uservo" parameterType="uservo">
-		<!-- 쿼리에 <, >가 필요할 경우 xml에서 사용이 안되기 때문에 CDATA을 명시해준다. -->
+	<insert id="insert" parameterType = "uservo">
+	<!-- 쿼리에 <, >가 필요할 경우 xml에서 사용이 안되기 때문에 CDATA을 명시해준다. -->
+		<![CDATA[
+			insert into user
+			values (null, #{name }, #{email }, password(#{password }), #{gender }, now())
+		]]>
+	</insert>
+	
+	<select id="findByEmailAndPassword" resultType="uservo" parameterType="map">
 		<![CDATA[
 		select no, name 
 		from user 
-		where email = #{email } 
-		and password = password(#{password })
+		where email = #{e } 
+		and password = password(#{p })
 		]]>
 	</select>
+	
+	<select id="findByNo" resultType="uservo" parameterType="long">
+		<![CDATA[
+		select no, name, email, gender 
+		from user 
+		where no=#{no }
+		]]>
+	</select>
+	
+	<update id="update" parameterType="uservo">
+		<choose>
+			<when test='password == ""'>
+				<![CDATA[
+					update user set name=#{name }, gender=#{gender } where no=#{no }		
+				]]>
+			</when>
+			<otherwise>
+				<![CDATA[
+					update user 
+					set name=#{name }, gender=#{gender }, password=password(#{password }) 
+					where no=#{no}				
+				]]>
+			</otherwise>
+		</choose>
+	</update>
 </mapper>
