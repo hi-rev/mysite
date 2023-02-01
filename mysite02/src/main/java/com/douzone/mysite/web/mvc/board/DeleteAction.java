@@ -18,7 +18,7 @@ public class DeleteAction implements Action {
 		Long no = Long.parseLong(noStr);
 		
 		new BoardDao().deleteByNo(no);
-		MvcUtil.redirect(request.getContextPath() + "/board", request, response);
+		MvcUtil.redirect(request.getContextPath() + "/board?a=list&page=1", request, response);
 	}
 
 }

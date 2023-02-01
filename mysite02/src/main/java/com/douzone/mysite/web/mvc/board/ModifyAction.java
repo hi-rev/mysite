@@ -26,7 +26,7 @@ public class ModifyAction implements Action {
 		vo.setContents(contents);
 		
 		new BoardDao().modify(vo);
-		MvcUtil.redirect(request.getContextPath() + "/board?a=list", request, response);
+		MvcUtil.redirect(request.getContextPath() + "/board?a=list&page=1", request, response);
 	}
 
 }

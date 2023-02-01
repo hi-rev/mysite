@@ -51,7 +51,7 @@ public class ReplyAction implements Action {
 		vo.setUserNo(authUser.getNo()); // 현재 로그인 한 사용자
 
 		new BoardDao().insertReply(vo);
-		MvcUtil.redirect(request.getContextPath() + "/board", request, response);
+		MvcUtil.redirect(request.getContextPath() + "/board?a=list&page=1", request, response);
 	}
 
 }
