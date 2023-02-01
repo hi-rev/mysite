@@ -50,13 +50,25 @@
 				<!-- pager 추가 -->
 				<div class="pager">
 					<ul>
-						<li><a href="">◀</a></li>
-						<li class="selected"><a href="">1</a></li>
-						<li><a href="">2</a></li>
-						<li><a href="">3</a></li>
-						<li>4</li>
-						<li>5</li>
-						<li><a href="">▶</a></li>
+						<c:choose>
+							<c:when test="${p eq 1}">
+								<li><a class="disable">◀</a></li>		
+							</c:when>
+							<c:otherwise>
+								<li><a href="${pageContext.request.contextPath }/board?a=list&page=${p-1 }">◀</a></li>
+							</c:otherwise>
+						</c:choose>
+						<c:forEach var="i" begin="1" end="${totalPage }" step="1">
+							<li><a href="${pageContext.request.contextPath }/board?a=list&page=${i }">${i }</a></li>
+						</c:forEach>
+						<c:choose>
+							<c:when test="${p eq totalPage}">
+								<li><a class="disable">▶</a></li>		
+							</c:when>
+							<c:otherwise>
+								<li><a href="${pageContext.request.contextPath }/board?a=list&page=${p+1 }">▶</a></li>
+							</c:otherwise>
+						</c:choose>
 					</ul>
 				</div>					
 				<!-- pager 추가 -->
