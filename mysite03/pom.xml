@@ -15,6 +15,9 @@
 		<maven.compiler.target>17</maven.compiler.target>
 		<!-- springframework version -->
 		<org.springframework-version>5.3.25</org.springframework-version>
+		<!-- slf4j, logback version-->
+    	<jcloverslf4j.version>1.7.6</jcloverslf4j.version>		
+    	<logback.version>1.1.1</logback.version>
    </properties>
 
   <dependencies>
@@ -23,6 +26,13 @@
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-webmvc</artifactId>
 		    <version>${org.springframework-version}</version>
+		    <!-- JCL 제외하기 -->
+			<exclusions>
+			   <exclusion>
+				  <groupId>org.springframework</groupId>
+				  <artifactId>spring-jcl</artifactId>
+			   </exclusion>
+			</exclusions>
 		</dependency>
 		
 		<!-- spring JDBC -->
@@ -64,6 +74,18 @@
 	   	 	<groupId>org.mariadb.jdbc</groupId>
 	   		 <artifactId>mariadb-java-client</artifactId>
 	   		 <version>3.0.8</version>
+		</dependency>
+		
+		<!-- Logback --> 
+		<dependency>                                    
+			<groupId>org.slf4j</groupId>                
+			<artifactId>jcl-over-slf4j</artifactId>     
+			<version>${jcloverslf4j.version}</version>  
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
 		</dependency>
 
 		 <!-- servlet -->
