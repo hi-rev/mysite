@@ -73,4 +73,17 @@
 				]]>
 			</selectKey>
 	</insert>
+	
+	<delete id="deleteByNo" parameterType="Long">
+		delete
+		from board
+		where no = #{no }
+	</delete>
+	
+	<select id="findByNo" parameterType="Long" resultType="boardvo">
+		select no, title, contents, user_no, g_no, o_no, depth
+		from board
+		where no = #{no}
+	</select>
+	
 </mapper>

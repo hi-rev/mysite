@@ -33,4 +33,12 @@ public class BoardRepository {
 		sqlSession.insert("board.insert", vo);
 	}
 
+	public void deleteByNo(Long no) {
+		sqlSession.delete("board.deleteByNo", no);
+	}
+
+	public BoardVo findByNo(Long no) {
+		return sqlSession.selectOne("board.findByNo", no);
+	}
+
 }

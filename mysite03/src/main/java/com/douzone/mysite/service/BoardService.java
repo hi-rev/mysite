@@ -30,7 +30,7 @@ public class BoardService {
 	
 	// 게시물 보기
 	public BoardVo getContents(Long no) {
-		return null;
+		return boardRepository.findByNo(no);
 	}
 	
 	public BoardVo getContents(Long no, Long userNo) {
@@ -43,23 +43,20 @@ public class BoardService {
 	}
 	
 	// 게시글 삭제
-	public void deleteContents(Long no, Long userNo) {
-		
+	public void deleteContents(Long no) {
+		boardRepository.deleteByNo(no);
 	}
 	
 	// 게시글 출력
 	public Map<String, Object> getContentsList(int page, String keyword) {
 		int toTalCount = boardRepository.getTotalCount(keyword);
 //		System.out.println(toTalCount);
-		
-		// 1. view에서 게시판 리스트를 렌더링 하기 위한 데이터 값 계산
+
 		int beginPage = 0;
 		
-		// 2. 리스트 가져오기
 		List<BoardVo> list = boardRepository.findAllByPageAndKeyWord(page, keyword, LIST_SIZE);
 		
-		// 3. 리스트 정보를 Map에 저장
-		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> map = new HashMap<>(); 
 		map.put("list", list);
 		map.put("beginPage", beginPage);
 		map.put("totalPage", toTalCount / LIST_SIZE + 1);

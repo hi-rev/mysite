@@ -42,4 +42,19 @@ public class BoardController {
 		boardService.addContents(session, vo);
 		return "redirect:/board/list/1";
 	}
+	
+	// 4. 삭제하기
+	@RequestMapping("/delete/{no}")
+	public String delete(@PathVariable("no") Long no) {
+		boardService.deleteContents(no);
+		return "redirect:/board/list/1";
+	}
+	
+	// 5. 글 보기
+	@RequestMapping("/view/{no}")
+	public String view(@PathVariable("no") Long no, Model model) {
+		BoardVo vo = boardService.getContents(no);
+		model.addAttribute("board", vo);
+		return "board/view";
+	}
 }
