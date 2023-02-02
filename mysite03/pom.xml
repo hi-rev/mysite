@@ -35,6 +35,14 @@
 			</exclusions>
 		</dependency>
 		
+		<!-- spring aspect-->
+		<!-- spring에서 aop 구현하기 위함 -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-aspects</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency>
+		
 		<!-- spring JDBC -->
 		<dependency>
 			<groupId>org.springframework</groupId>
