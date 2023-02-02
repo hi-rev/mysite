@@ -27,8 +27,8 @@
 						<th>작성일</th>
 						<th>&nbsp;</th>
 					</tr>
-					<c:set var="count" value="${fn:length(list) }" />
-					<c:forEach items="${list }" var="vo" varStatus="status" >
+					<c:set var="count" value="${fn:length(map.list) }" />
+					<c:forEach items="${map.list }" var="vo" varStatus="status" >
 						<tr>
 							<td>${count - status.index}</td>
 							<td style="text-align:left; padding-left: ${vo.depth*10}px">
@@ -40,9 +40,11 @@
 							<td>${vo.name }</td>
 							<td>${vo.hit }</td>
 							<td>${vo.regDate }</td>
+							<!-- 
 							<c:if test="${authUser.no eq vo.userNo }">
 								<td><a href="${pageContext.request.contextPath }/board?a=delete&no=${vo.no}" class="del"></a></td> 
 							</c:if>
+							-->
 						</tr>
 					</c:forEach>
 				</table>
@@ -50,19 +52,31 @@
 				<!-- pager 추가 -->
 				<div class="pager">
 					<ul>
-						<li><a href="">◀</a></li>
-						<li><a href="${pageContext.request.contextPath }/board?a=list&page=1">1</a></li>
-						<li><a href="${pageContext.request.contextPath }/board?a=list&page=2">2</a></li>
-						<li><a href="${pageContext.request.contextPath }/board?a=list&page=3">3</a></li>
-						<li>4</li>
-						<li>5</li>
-						<li><a href="">▶</a></li>
+						<c:choose>
+							<c:when test="${p eq 1}">
+								<li><a class="disable">◀</a></li>		
+							</c:when>
+							<c:otherwise>
+								<li><a href="${pageContext.request.contextPath }/board/list/${p-1 }">◀</a></li>
+							</c:otherwise>
+						</c:choose>
+						<c:forEach var="i" begin="1" end="${map.totalPage }" step="1">
+							<li><a href="${pageContext.request.contextPath }/board/list/${i}">${i }</a></li>
+						</c:forEach>
+						<c:choose>
+							<c:when test="${p eq map.totalPage}">
+								<li><a class="disable">▶</a></li>		
+							</c:when>
+							<c:otherwise>
+								<li><a href="${pageContext.request.contextPath }/board/list/${p+1 }">▶</a></li>
+							</c:otherwise>
+						</c:choose>
 					</ul>
 				</div>					
 				<!-- pager 추가 -->
 				
 				<div class="bottom">
-					<a href="${pageContext.request.contextPath }/board?a=writeform" id="new-book">글쓰기</a>
+					<a href="${pageContext.request.contextPath }/board/write" id="new-book">글쓰기</a>
 				</div>				
 			</div>
 		</div>

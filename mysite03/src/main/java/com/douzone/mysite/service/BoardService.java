@@ -4,23 +4,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.douzone.mysite.repository.BoardRepository;
 import com.douzone.mysite.vo.BoardVo;
+import com.douzone.mysite.vo.UserVo;
 
 @Service
 public class BoardService {
 	private static final int LIST_SIZE = 5; // 리스팅 되는 게시물의 수
-	private static final int PAGE_SIZE = 5; // 페이지 리스트의 페이지 수
 	
 	@Autowired
 	private BoardRepository boardRepository;
 	
 	// 게시물 추가하기
-	public void addContents(BoardVo vo) {
-		
+	public void addContents(HttpSession session, BoardVo vo) {
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		vo.setHit(3L);
+		vo.setUserNo(authUser.getNo());
+		boardRepository.insert(vo);
 	}
 	
 	// 게시물 보기
@@ -42,14 +47,13 @@ public class BoardService {
 		
 	}
 	
+	// 게시글 출력
 	public Map<String, Object> getContentsList(int page, String keyword) {
 		int toTalCount = boardRepository.getTotalCount(keyword);
+//		System.out.println(toTalCount);
 		
 		// 1. view에서 게시판 리스트를 렌더링 하기 위한 데이터 값 계산
 		int beginPage = 0;
-		int prevPage = 0; // 이전 페이지
-		int nextPage = 0; // 다음 페이지
-		int endPage = 0;
 		
 		// 2. 리스트 가져오기
 		List<BoardVo> list = boardRepository.findAllByPageAndKeyWord(page, keyword, LIST_SIZE);
@@ -58,6 +62,7 @@ public class BoardService {
 		Map<String, Object> map = new HashMap<>();
 		map.put("list", list);
 		map.put("beginPage", beginPage);
+		map.put("totalPage", toTalCount / LIST_SIZE + 1);
 		
 		return map;
 	}
