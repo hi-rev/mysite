@@ -41,4 +41,9 @@ public class BoardRepository {
 		return sqlSession.selectOne("board.findByNo", no);
 	}
 
+	public void modifyByNo(Long no, String title, String content) {
+		Map<String, Object> map = Map.of("no", no, "title", title, "contents", content);
+		sqlSession.update("board.modifyByNo", map);
+	}
+
 }

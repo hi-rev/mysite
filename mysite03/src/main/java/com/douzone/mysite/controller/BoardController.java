@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.douzone.mysite.service.BoardService;
 import com.douzone.mysite.vo.BoardVo;
@@ -56,5 +57,22 @@ public class BoardController {
 		BoardVo vo = boardService.getContents(no);
 		model.addAttribute("board", vo);
 		return "board/view";
+	}
+	
+	// 6. 글 수정 페이지 이동
+	@RequestMapping(value="/modify/{no}", method=RequestMethod.GET)
+	public String modify(@PathVariable("no") Long no, Model model) {
+		BoardVo vo = boardService.getContents(no);
+		model.addAttribute("board", vo);
+		return "board/modify";
+	}
+	
+	// 7. 글 수정
+	@RequestMapping(value="/modify/{no}", method=RequestMethod.POST)
+	public String modify(@PathVariable("no") Long no, 
+			@RequestParam(value="title", required=true, defaultValue="") String title, 
+			@RequestParam(value="content", required=true, defaultValue="") String content) {
+		boardService.modifyContents(no, title, content);
+		return "redirect:/board/list/1";
 	}
 }

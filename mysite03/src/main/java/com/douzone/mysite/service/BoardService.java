@@ -63,4 +63,8 @@ public class BoardService {
 		
 		return map;
 	}
+
+	public void modifyContents(Long no, String title, String content) {
+		boardRepository.modifyByNo(no, title, content);
+	}
 }
