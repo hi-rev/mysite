@@ -20,10 +20,6 @@ public class ListAction implements Action {
 		// Access Control(보안, 인증체크)
 		HttpSession session = request.getSession();
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		if(authUser == null) {
-			MvcUtil.redirect(request.getContextPath(), request, response);
-			return;
-		}
 		
 		int totalPage = new BoardDao().getTotalCount() / 5 + 1;
 		request.setAttribute("totalPage", totalPage);

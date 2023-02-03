@@ -29,7 +29,7 @@ public class BoardDao {
 								"   limit ?, ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, (page-1)*5);
-			pstmt.setInt(2, (page-1)*5 + 5);
+			pstmt.setInt(2, 5);
 			
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
