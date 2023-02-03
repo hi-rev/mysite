@@ -33,15 +33,6 @@ public class BoardService {
 		return boardRepository.findByNo(no);
 	}
 	
-	public BoardVo getContents(Long no, Long userNo) {
-		return null;
-	}
-	
-	// 게시글 수정
-	public void updateContents(BoardVo vo) {
-		
-	}
-	
 	// 게시글 삭제
 	public void deleteContents(Long no) {
 		boardRepository.deleteByNo(no);
@@ -63,11 +54,13 @@ public class BoardService {
 		
 		return map;
 	}
-
+	
+	// 게시글 수정
 	public void modifyContents(Long no, String title, String content) {
 		boardRepository.modifyByNo(no, title, content);
 	}
-
+	
+	// 댓글 달기
 	public void addReply(HttpSession session, BoardVo vo) {
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		vo.setHit(3L);

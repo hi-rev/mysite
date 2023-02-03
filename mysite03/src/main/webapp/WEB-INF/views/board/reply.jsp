@@ -15,8 +15,8 @@
 		<div id="content">
 			<div id="board">
 				<form class="board-form" method="post" action="${pageContext.request.contextPath }/board/reply">
-					<input type = "hidden" name = "gno" value="${board.gNo }">
-					<input type = "hidden" name = "ono" value="${board.oNo }">
+					<input type = "hidden" name = "gNo" value="${board.gNo }">
+					<input type = "hidden" name = "oNo" value="${board.oNo }">
 					<input type = "hidden" name = "depth" value="${board.depth }">
 					<table class="tbl-ex">
 						<tr>
