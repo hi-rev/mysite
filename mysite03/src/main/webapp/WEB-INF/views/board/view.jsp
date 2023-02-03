@@ -37,7 +37,7 @@
 					<c:if test="${authUser.no eq board.userNo }">
 						<a href="${pageContext.request.contextPath }/board/modify/${board.no}">글수정</a>
 					</c:if>
-					<a href="${pageContext.request.contextPath }/board?a=replyform&no=${board.no}">댓글달기</a>
+					<a href="${pageContext.request.contextPath }/board/reply/${board.no}">댓글달기</a>
 				</div>
 			</div>
 		</div>

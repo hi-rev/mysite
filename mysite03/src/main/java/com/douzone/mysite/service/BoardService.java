@@ -67,4 +67,11 @@ public class BoardService {
 	public void modifyContents(Long no, String title, String content) {
 		boardRepository.modifyByNo(no, title, content);
 	}
+
+	public void addReply(HttpSession session, BoardVo vo) {
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		vo.setHit(3L);
+		vo.setUserNo(authUser.getNo());
+		boardRepository.insertReply(vo);
+	}
 }

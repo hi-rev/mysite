@@ -75,4 +75,19 @@ public class BoardController {
 		boardService.modifyContents(no, title, content);
 		return "redirect:/board/list/1";
 	}
+	
+	// 8. 댓글 쓰기 페이지 이동
+	@RequestMapping(value="/reply/{no}", method=RequestMethod.GET)
+	public String reply(@PathVariable("no") Long no, Model model) {
+		BoardVo vo = boardService.getContents(no);
+		model.addAttribute("board", vo);
+		return "board/reply";
+	}
+	
+	// 9. 댓글 쓰기
+	@RequestMapping(value="/reply", method=RequestMethod.POST)
+	public String reply(HttpSession session, BoardVo vo) {
+		boardService.addReply(session, vo);
+		return "redirect:/board/list/1";
+	}
 }

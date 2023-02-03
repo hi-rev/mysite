@@ -46,4 +46,8 @@ public class BoardRepository {
 		sqlSession.update("board.modifyByNo", map);
 	}
 
+	public void insertReply(BoardVo vo) {
+		sqlSession.insert("board.insertReply", vo);
+	}
+
 }
