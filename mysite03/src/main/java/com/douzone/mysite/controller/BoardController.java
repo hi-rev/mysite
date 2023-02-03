@@ -23,11 +23,14 @@ public class BoardController {
 	
 	// 1. 게시판 페이지 넘어가기
 	@RequestMapping("/list/{i}")
-	public String list(@PathVariable("i") int page, Model model) {
-		Map<String, Object> map = boardService.getContentsList(page, "");
+	public String list(@PathVariable("i") int page, 
+			@RequestParam(value="kwd", required=true, defaultValue="") String kwd, 
+			Model model) {
+		Map<String, Object> map = boardService.getContentsList(page, kwd);
 		
 		model.addAttribute("map", map);
 		model.addAttribute("p", page);
+		model.addAttribute("kwd", kwd);
 		return "board/list";
 	}
 	
