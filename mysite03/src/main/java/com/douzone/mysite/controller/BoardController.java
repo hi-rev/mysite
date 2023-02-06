@@ -26,9 +26,8 @@ public class BoardController {
 	
 	// 1.   리스트 보여주기
 	@RequestMapping("")
-	public String index(
-		@RequestParam(value="p", required=true, defaultValue="1") Integer page,
-		@RequestParam(value="kwd", required=true, defaultValue="") String keyword,
+	public String index(@RequestParam(value="p", required=true, defaultValue="1") Integer page,
+		@RequestParam(value="kwd", required=true, defaultValue="") String keyword, 
 		Model model) {
 		
 		Map<String, Object> map = boardService.getContentsList(page, keyword);
@@ -50,9 +49,7 @@ public class BoardController {
 	
 	// 3. 게시글 삭제
 	@RequestMapping("/delete/{no}")
-	public String delete(
-		HttpSession session,
-		@PathVariable("no") Long boardNo,
+	public String delete(HttpSession session, @PathVariable("no") Long boardNo,
 		@RequestParam(value="p", required=true, defaultValue="1") Integer page,
 		@RequestParam(value="kwd", required=true, defaultValue="") String keyword) {
 
@@ -68,10 +65,7 @@ public class BoardController {
 	
 	// 4. 게시글 수정 페이지 이동 
 	@RequestMapping("/modify/{no}")	
-	public String modify(
-		HttpSession session,	
-		@PathVariable("no") Long no,
-		Model model) {
+	public String modify(HttpSession session, @PathVariable("no") Long no, Model model) {
 
 		// Access Control
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
@@ -87,9 +81,7 @@ public class BoardController {
 	
 	// 5. 게시글 수정
 	@RequestMapping(value="/modify", method=RequestMethod.POST)	
-	public String modify(
-		HttpSession session,
-		@ModelAttribute BoardVo boardVo,
+	public String modify(HttpSession session, @ModelAttribute BoardVo boardVo,
 		@RequestParam(value="p", required=true, defaultValue="1") Integer page,
 		@RequestParam(value="kwd", required=true, defaultValue="") String keyword) {
 
@@ -120,9 +112,7 @@ public class BoardController {
 	
 	// 7. 게시글 쓰기
 	@RequestMapping(value="/write", method=RequestMethod.POST)	
-	public String write(
-		HttpSession session,	
-		@ModelAttribute BoardVo boardVo,
+	public String write(HttpSession session, @ModelAttribute BoardVo boardVo,
 		@RequestParam(value="p", required=true, defaultValue="1") Integer page,
 		@RequestParam(value="kwd", required=true, defaultValue="") String keyword) {
 	
@@ -140,10 +130,7 @@ public class BoardController {
 	
 	// 8. 댓글 쓰기
 	@RequestMapping(value="/reply/{no}")	
-	public String reply(
-		HttpSession session,
-		@PathVariable("no") Long no,
-		Model model) {
+	public String reply(HttpSession session, @PathVariable("no") Long no, Model model) {
 		
 		// Access Control
 		UserVo authUser = (UserVo)session.getAttribute("authUser");

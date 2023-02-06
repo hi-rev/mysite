@@ -51,13 +51,13 @@ public class BoardService {
 	
 	public Map<String, Object> getContentsList(int currentPage, String keyword) {
 		
-		//1. 페이징을 위한 기본 데이터 계산
+		// 1. 페이징을 위한 기본 데이터 계산
 		int totalCount = boardRepository.getTotalCount(keyword); 
 		int pageCount = (int)Math.ceil((double)totalCount / LIST_SIZE);
 		int blockCount = (int)Math.ceil((double)pageCount / PAGE_SIZE);
 		int currentBlock = (int)Math.ceil((double)currentPage / PAGE_SIZE);
 		
-		//2. 파라미터 page 값  검증
+		// 2. 파라미터 page 값  검증
 		if(currentPage > pageCount) {
 			currentPage = pageCount;
 			currentBlock = (int)Math.ceil((double)currentPage / PAGE_SIZE);
@@ -68,16 +68,16 @@ public class BoardService {
 			currentBlock = 1;
 		}
 		
-		//3. view에서 페이지 리스트를 렌더링 하기위한 데이터 값 계산
+		// 3. view에서 페이지 리스트를 렌더링 하기위한 데이터 값 계산
 		int beginPage = currentBlock == 0 ? 1 : (currentBlock - 1) * PAGE_SIZE + 1;
 		int prevPage = (currentBlock > 1 ) ? (currentBlock - 1) * PAGE_SIZE : 0;
 		int nextPage = (currentBlock < blockCount) ? currentBlock * PAGE_SIZE + 1 : 0;
 		int endPage = (nextPage > 0) ? (beginPage - 1) + LIST_SIZE : pageCount;
 		
-		//4. 리스트 가져오기
+		// 4. 리스트 가져오기
 		List<BoardVo> list = boardRepository.findAllByPageAndKeword(keyword, currentPage, LIST_SIZE);
 		
-		//5. 리스트 정보를 맵에 저장
+		// 5. 리스트 정보를 맵에 저장
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("list", list);
