@@ -2,8 +2,6 @@ package com.douzone.mysite.controller;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.douzone.mysite.security.Auth;
+import com.douzone.mysite.security.AuthUser;
 import com.douzone.mysite.service.BoardService;
 import com.douzone.mysite.vo.BoardVo;
 import com.douzone.mysite.vo.UserVo;
@@ -24,7 +24,7 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 	
-	// 1.   리스트 보여주기
+	// 1. 리스트 보여주기
 	@RequestMapping("")
 	public String index(@RequestParam(value="p", required=true, defaultValue="1") Integer page,
 		@RequestParam(value="kwd", required=true, defaultValue="") String keyword, 
@@ -48,30 +48,19 @@ public class BoardController {
 	}
 	
 	// 3. 게시글 삭제
+	@Auth
 	@RequestMapping("/delete/{no}")
-	public String delete(HttpSession session, @PathVariable("no") Long boardNo,
+	public String delete(@AuthUser UserVo authUser, @PathVariable("no") Long boardNo,
 		@RequestParam(value="p", required=true, defaultValue="1") Integer page,
 		@RequestParam(value="kwd", required=true, defaultValue="") String keyword) {
 
-		// Access Control
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		if(authUser == null) {
-			return "redirect:/";
-		}
-		
 		boardService.deleteContents(boardNo, authUser.getNo());
 		return "redirect:/board?p=" + page + "&kwd=" + WebUtil.encodeURL(keyword, "UTF-8");
 	}
 	
 	// 4. 게시글 수정 페이지 이동 
 	@RequestMapping("/modify/{no}")	
-	public String modify(HttpSession session, @PathVariable("no") Long no, Model model) {
-
-		// Access Control
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		if(authUser == null) {
-			return "redirect:/";
-		}
+	public String modify(@AuthUser UserVo authUser, @PathVariable("no") Long no, Model model) {
 
 		BoardVo boardVo = boardService.getContents(no, authUser.getNo());
 
@@ -80,17 +69,12 @@ public class BoardController {
 	}
 	
 	// 5. 게시글 수정
+	@Auth
 	@RequestMapping(value="/modify", method=RequestMethod.POST)	
-	public String modify(HttpSession session, @ModelAttribute BoardVo boardVo,
+	public String modify(@AuthUser UserVo authUser, @ModelAttribute BoardVo boardVo,
 		@RequestParam(value="p", required=true, defaultValue="1") Integer page,
 		@RequestParam(value="kwd", required=true, defaultValue="") String keyword) {
 
-		// Access Control
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		if(authUser == null) {
-			return "redirect:/";
-		}
-		
 		boardVo.setUserNo(authUser.getNo());
 		boardService.modifyContents(boardVo);
 		return "redirect:/board/view/" + boardVo.getNo() + 
@@ -99,29 +83,20 @@ public class BoardController {
 	}
 	
 	// 6. 게시글 쓰기 페이지 이동
+	// @Auth: default로 설정해주면 따로 값 지정 안해줘도 됨
+	@Auth
 	@RequestMapping(value="/write", method=RequestMethod.GET)	
-	public String write(HttpSession session) {
-		// Access Control
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		if(authUser == null) {
-			return "redirect:/";
-		}
+	public String write(@AuthUser UserVo authUser) {
 
 		return "board/write";
 	}
 	
 	// 7. 게시글 쓰기
 	@RequestMapping(value="/write", method=RequestMethod.POST)	
-	public String write(HttpSession session, @ModelAttribute BoardVo boardVo,
+	public String write(@AuthUser UserVo authUser, @ModelAttribute BoardVo boardVo,
 		@RequestParam(value="p", required=true, defaultValue="1") Integer page,
 		@RequestParam(value="kwd", required=true, defaultValue="") String keyword) {
 	
-		// Access Control
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		if(authUser == null) {
-			return "redirect:/";
-		}
-		
 		boardVo.setUserNo(authUser.getNo());
 		boardService.addContents(boardVo);
 		
@@ -130,13 +105,7 @@ public class BoardController {
 	
 	// 8. 댓글 쓰기
 	@RequestMapping(value="/reply/{no}")	
-	public String reply(HttpSession session, @PathVariable("no") Long no, Model model) {
-		
-		// Access Control
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		if(authUser == null) {
-			return "redirect:/";
-		}
+	public String reply(@AuthUser UserVo authUser, @PathVariable("no") Long no, Model model) {
 
 		BoardVo boardVo = boardService.getContents(no);
 		boardVo.setOrderNo(boardVo.getOrderNo() + 1);
