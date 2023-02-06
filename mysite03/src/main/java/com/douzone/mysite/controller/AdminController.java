@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.douzone.mysite.security.Auth;
 
-// 1. auth interceptor 바꾸기
 @Auth(role="ADMIN")
 @Controller
 @RequestMapping("/admin")
@@ -13,6 +12,7 @@ public class AdminController {
 	
 	@RequestMapping("")
 	public String main() {
+		System.out.println("admin/main go");
 		return "admin/main";
 	}
 	

@@ -36,6 +36,8 @@
 				</property>
 			</bean>
 		</mvc:message-converters>
+		
+		<!-- argument resolver -->
 		<mvc:argument-resolvers>
 			<bean class="com.douzone.mysite.security.AuthUserHandlerMethodArgumentResolver" />
 		</mvc:argument-resolvers>

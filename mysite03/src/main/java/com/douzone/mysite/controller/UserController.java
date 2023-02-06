@@ -21,11 +21,13 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	// 1. 회원 가입 페이지 이동
 	@RequestMapping(value="/join", method=RequestMethod.GET)
 	public String join(@ModelAttribute UserVo vo) {
 		return "user/join";
 	}
-
+	
+	// 2. 회원 가입
 	@RequestMapping(value="/join", method=RequestMethod.POST)
 	public String join(@ModelAttribute @Valid UserVo vo, BindingResult result, Model model) {
 		if(result.hasErrors()) {
@@ -38,16 +40,20 @@ public class UserController {
 		return "redirect:/user/joinsuccess";
 	}
 	
+	// 3. 회원 가입 성공 페이지 이동
 	@RequestMapping("/joinsuccess")
 	public String joinSuccess() {
 		return "user/joinsuccess";
 	}
-
+	
+	// 4. 로그인 페이지 이동
+	// -> 로그인 처리는 user/auth로 하도록 함 (spring-servlet에서 Handler Interceptor 등록)
 	@RequestMapping("/login")
 	public String login() {
 		return "user/login";
 	}
 	
+	// 5. 회원 정보 수정 페이지 이동
 	@Auth
 	@RequestMapping(value="/update", method=RequestMethod.GET)
 	public String update(@AuthUser UserVo authUser, Model model) {
@@ -56,7 +62,8 @@ public class UserController {
 		model.addAttribute("userVo", userVo);
 		return "user/update";
 	}
-
+	
+	// 6. 회원 정보 수정
 	@Auth
 	@RequestMapping(value="/update", method=RequestMethod.POST)
 	public String update(@AuthUser UserVo authUser, UserVo vo) {
