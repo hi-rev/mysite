@@ -14,6 +14,8 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
 		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 	
+	<context:annotation-config />
+	
 	<!-- auto proxy -->
 	<aop:aspectj-autoproxy />
 	

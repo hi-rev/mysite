@@ -14,7 +14,7 @@ public class MainController {
 	
 //	@Autowired
 //	private ServletContext servletContext;
-	
+	 
 	@RequestMapping("/")
 	public String index(Model model) {
 		return "main/index";

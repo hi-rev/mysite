@@ -20,7 +20,6 @@ public class TitleInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		SiteVo site = siteService.getSite();
-		System.out.println(site.getTitle());
 		
 		HttpSession session = request.getSession(true);
 		session.setAttribute("site", site);

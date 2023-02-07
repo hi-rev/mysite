@@ -31,9 +31,6 @@
 						
 						<input type="submit" value="변경" />
 					</form>
-									
-				
-
 				</div>
 			</div>
 			<c:import url="/WEB-INF/views/admin/include/navigation.jsp">
