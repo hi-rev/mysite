@@ -1,9 +1,6 @@
 package com.douzone.mysite.controller;
 
-//import javax.servlet.ServletContext;
-
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -11,12 +8,9 @@ import com.douzone.mysite.vo.UserVo;
 
 @Controller
 public class MainController {
-	
-//	@Autowired
-//	private ServletContext servletContext;
 	 
 	@RequestMapping("/")
-	public String index(Model model) {
+	public String index() {
 		return "main/index";
 	}
 	

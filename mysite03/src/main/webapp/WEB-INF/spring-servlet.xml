@@ -13,12 +13,15 @@
 		http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context
 		http://www.springframework.org/schema/context/spring-context.xsd">
-	<mvc:annotation-driven />
-	
 	<!-- auto proxy -->
 	<aop:aspectj-autoproxy />
 
-	<!-- validator, conversionService, messageConverter, argumentResolver를 등록 -->
+	<!-- 
+		validator,
+		conversionService,
+		messageConverter,
+		argumentResolver 를 등록
+	-->
 	<mvc:annotation-driven>
 		<mvc:message-converters>
 			<bean
@@ -38,8 +41,6 @@
 				</property>
 			</bean>
 		</mvc:message-converters>
-		
-		<!-- argument resolver -->
 		<mvc:argument-resolvers>
 			<bean class="com.douzone.mysite.security.AuthUserHandlerMethodArgumentResolver" />
 		</mvc:argument-resolvers>
@@ -47,7 +48,7 @@
 
 	<!-- Default Servlet Handler -->
 	<mvc:default-servlet-handler />
-	
+
 	<!-- Inteceptors -->
 	<mvc:interceptors>
 		<mvc:interceptor>
@@ -67,13 +68,10 @@
 		</mvc:interceptor>
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
-			<mvc:exclude-mapping path="/user/auth"/>
-			<mvc:exclude-mapping path="/user/logout"/>
-			<mvc:exclude-mapping path="/assets/**"/>
-			<bean class="com.douzone.mysite.security.TitleInterceptor" />
+			<bean class="com.douzone.mysite.interceptor.SiteInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
-
+	
 	<!-- ViewResolver -->
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -92,7 +90,7 @@
 	      </list>
 	   </property>
 	</bean>
-	
+
 	<!-- Multipart Resolver -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<!-- 최대업로드 가능한 바이트크기 -->
@@ -102,9 +100,10 @@
 		<!-- defaultEncoding -->
 		<property name="defaultEncoding" value="utf-8" />
 	</bean>
-	
+
 	<!-- mvc url-resource mapping -->
-	<mvc:resources location="/assets/upload-images/**" mapping="file:/mysite-uploads/" />
+	<mvc:resources mapping="/assets/upload-images/**" location="file:/mysite-uploads/" />
+
 
 	<context:annotation-config />
 	<context:component-scan

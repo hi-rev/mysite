@@ -16,6 +16,6 @@ public class SiteRepository {
 	}
 
 	public void update(SiteVo vo) {
-//		sqlSession.update("site.update", vo);
+		sqlSession.update("site.update", vo);
 	}
 }

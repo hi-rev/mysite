@@ -9,4 +9,15 @@
 		  limit 0, 1
 		]]>
 	</select>
+	
+	<update id="update" parameterType="sitevo">
+		<![CDATA[
+		update site
+	   	   set title = #{title },
+		       welcome = #{welcome },
+			   profile = #{profile },
+			   description = #{description }
+	     where no = 2       	
+		]]>
+	</update>
 </mapper>
