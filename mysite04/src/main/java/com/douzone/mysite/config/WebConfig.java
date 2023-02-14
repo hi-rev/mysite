@@ -19,8 +19,7 @@ import com.douzone.mysite.interceptor.SiteInterceptor;
 @ComponentScan({"com.douzone.mysite.controller"})
 @Import({MvcConfig.class, SecurityConfig.class})
 public class WebConfig implements WebMvcConfigurer {
-	
-	// Site Interceptor
+	// Site Inteceptor
 	@Bean
 	public HandlerInterceptor siteInterceptor() {
 		return new SiteInterceptor();
@@ -28,8 +27,9 @@ public class WebConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(siteInterceptor())
-					  .addPathPatterns("/**");
+		registry
+			.addInterceptor(siteInterceptor())
+			.addPathPatterns("/**");
 	}
 	
 	// Application Context Event Listener

@@ -36,30 +36,31 @@ public class MvcConfig implements WebMvcConfigurer {
 		return viewResolver;
 	}
 	
+	// Message Converters
+	@Bean
 	public StringHttpMessageConverter stringHttpMessageConverter() {
 		StringHttpMessageConverter messageConverter = new StringHttpMessageConverter();
-
 		messageConverter.setSupportedMediaTypes(
-				Arrays.asList(
-						new MediaType("text", "html", Charset.forName("utf-8"))
-						)
-				);
+			Arrays.asList(
+				new MediaType("text", "html", Charset.forName("utf-8"))
+			)
+		);
 		
 		return messageConverter;
 	}
 	
+	@Bean
 	public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
-		Jackson2ObjectMapperBuilder builder = 
-				new Jackson2ObjectMapperBuilder()
-						.indentOutput(true)
-						.dateFormat(new SimpleDateFormat("yyyy-mm-dd"));
+		Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder()
+			.indentOutput(true)
+			.dateFormat(new SimpleDateFormat("yyyy-mm-dd"));
+		
 		MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter(builder.build());
-	
 		messageConverter.setSupportedMediaTypes(
-				Arrays.asList(
-						new MediaType("application", "json", Charset.forName("utf-8"))
-						)
-				);
+			Arrays.asList(
+				new MediaType("application", "json", Charset.forName("utf-8"))
+			)
+		);
 		
 		return messageConverter;
 	}
@@ -69,7 +70,7 @@ public class MvcConfig implements WebMvcConfigurer {
 		converters.add(stringHttpMessageConverter());
 		converters.add(mappingJackson2HttpMessageConverter());
 	}
-	
+
 	// Default Servlet Handler
 	@Override
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
