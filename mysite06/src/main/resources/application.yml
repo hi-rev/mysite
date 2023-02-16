@@ -11,6 +11,7 @@ spring:
    # mvc
    mvc:
       static-path-pattern: /assets/**
+      throw-exception-if-no-handler-found: true
       view:
          prefix: /WEB-INF/views/
          suffix: .jsp
@@ -30,11 +31,51 @@ spring:
       always-use-message-format: true
       basename: web/messages_ko
       encoding: utf-8
-      
+   
+   # aop
    aop:
       auto: true
       proxy-target-class: true
-      
+   
+   # datasource
+   datasource:
+      driver-class-name: org.mariadb.jdbc.Driver
+      url: jdbc:mariadb://192.168.10.106:3307/webdb?charset=utf8
+      username: webdb
+      password: webdb
+      hikari:
+         minimum-idle: 10
+         maximum-pool-size: 20
+
+# mybatis
+mybatis:
+   config-location: classpath:mybatis/configuration.xml
+
 # server
 server:
    port: 9090
+   servlet:
+      context-path: /mysite06
+      encoding:
+         charset: utf-8
+         enabled: true
+         
+# logging
+logging:
+   pattern: 
+      file: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n"
+      console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n"
+   logback:
+      rollingpolicy:
+         file-name-pattern: /mysite-logs/exception.%d{yyyy-MM-dd}.%i.log.zip
+         max-file-size: 200MB
+         max-history: 10
+   file: 
+      name: /${spring.application.name}-logs/exception.log
+   level:
+      root: WARN
+      com:
+         douzone:
+            mysite:
+               exception: ERROR
+       

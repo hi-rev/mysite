@@ -6,14 +6,12 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Calendar;
 
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.douzone.mysite.exception.FileuploadServiceException;
 
 @Service
-@PropertySource("classpath:com/douzone/mysite/web/fileupload.properties")
 public class FileuploadService {
 	private final static String SAVE_PATH = "/mysite-uploads/upload-images";
 	private final static String URL_PATH = "/assets/upload-images";
