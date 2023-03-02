@@ -17,6 +17,15 @@
 		]]>
 	</select>
 	
+	<select id="findAllByNo" resultMap="findAllList" parameterType="map">
+		<![CDATA[
+		  	select no, name, message, reg_date
+			from guestbook
+			order by no desc
+			limit #{startNo}, #{size}
+		]]>
+	</select>
+	
 	<insert id="insert" parameterType="guestbookvo">
 		<![CDATA[
 		insert

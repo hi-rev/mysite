@@ -1,5 +1,6 @@
 package com.douzone.mysite.repository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,5 +26,12 @@ public class GuestBookRepository {
 	
 	public List<GuestBookVo> findAll() {
 		return	sqlSession.selectList("guestbook.findAll");
+	}
+
+	public List<GuestBookVo> findAllByNo(Long startNo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+        map.put("startNo", startNo);
+        map.put("size", startNo + 5);
+		return sqlSession.selectList("guestbook.findAllByNo", map);
 	}
 }

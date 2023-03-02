@@ -12,9 +12,9 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.9.0.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
-// guestbook list 그리기
+// add
 var render = function(vo, mode) {
-	var htmls = "<li data-no=''>" +
+	var htmls = "<li data-no='" + vo.no + "'>" +
 			"	<strong>" + vo.name + "</strong>" +
 			"	<p>" + vo.message + "</p>" +
 			"	<strong></strong>" +
@@ -23,7 +23,46 @@ var render = function(vo, mode) {
 		
 		$("#list-guestbook")[mode? "prepend" : "append"](htmls);
 }
+
+// list
+var fetch = function(sno) {
+	$.ajax({
+		url: "${pageContext.request.contextPath }/guestbook/api?sno=" + sno,
+		type: "get",
+		dataType: "json",
+		success: function(response) {
+			if (response.result === 'fail') {
+				console.error(response.message);
+				return;
+			}
+			console.log(response.data);
+			
+			response.data.forEach(function(vo) {
+				render(vo);
+			})
+		}
+	});
+}
+
 $(function() {
+	var k = 0;
+	fetch(k);
+	
+	// scroll
+	$(window).scroll(function() {
+		var $window = $(this);
+		var $document = $(document);
+		
+		var windowHeight = $window.height();
+		var documentHeight = $document.height();
+		var scrollTop = $window.scrollTop();
+		
+		if(documentHeight == windowHeight + scrollTop) {
+			k += 5;
+			fetch(k);
+		}
+	});
+	
 	$("#add-form").submit(function(event) {
 		event.preventDefault();
 		

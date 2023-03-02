@@ -17,6 +17,10 @@ public class GuestBookService {
 		return guestbookRepository.findAll();
 	}
 	
+	public List<GuestBookVo>getMessageListByNo(Long startNo) {
+		return guestbookRepository.findAllByNo(startNo);
+	}
+	
 	public void addMessage(GuestBookVo vo) {
 		guestbookRepository.insert(vo);
 	}
