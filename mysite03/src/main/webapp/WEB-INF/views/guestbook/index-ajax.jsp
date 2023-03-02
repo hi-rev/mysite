@@ -37,9 +37,10 @@ var fetch = function(sno) {
 			}
 			console.log(response.data);
 			
+			// 데이터 그려주기
 			response.data.forEach(function(vo) {
 				render(vo);
-			})
+			});
 		}
 	});
 }
@@ -63,6 +64,59 @@ $(function() {
 		}
 	});
 	
+	// delete
+	var $dialogDelete = $("#dialog-delete-form").dialog({
+	autoOpen: false,
+	modal: true,
+	buttons: {
+		"삭제": function() {
+			var no = $("#hidden-no").val();
+			var password = $("#password-delete").val();
+			
+			$.ajax({
+				url: "${pageContext.request.contextPath}/guestbook/api/" + no,
+				type: "delete",
+				dataType: "json",
+				data: 'password=' + password,
+				success: function(response) { 
+					if(response.result === 'fail') {
+						console.error(response.message);
+						return;
+					}
+					
+					console.log(response.data);
+					if(response.data != -1) {
+						$("#list-guestbook li[data-no=" + response.data + "]").remove(); // 요소 삭제
+						$dialogDelete.dialog('close');
+						return;
+					}
+					
+					// 비밀번호가 틀린경우
+					$("#dialog-delete-form p.validateTips.error").show();
+				}
+			});
+			$(this).find('form')[0].reset();
+			},
+			
+			"취소": function() {
+				$(this).dialog('close');
+				$(this).find('form')[0].reset();
+			}
+		}
+	});
+	
+	// 메세지 삭제 버튼 click 이벤트 처리(Live Event)
+	$(document).on('click', "#list-guestbook li", function(event){
+		event.preventDefault();
+		
+		// $(this)로 선택된 요소의 data-no 값을 #hidden-no 요소의 값으로 설정
+		// -> dialog 객체에서 data-no 값을 가져와 사용하기 위함
+		$("#hidden-no").val($(this).data("no"));
+		
+		$dialogDelete.dialog('open');
+	});
+	
+	// add
 	$("#add-form").submit(function(event) {
 		event.preventDefault();
 		
@@ -86,6 +140,9 @@ $(function() {
 				}
 				render(response.data, true);
 				// 잘 들어갔으면 val 값을 비워준다.
+				$("#input-name").val('');
+				$("#input-password").val('');
+				$("#tx-content").val('');
 			}
 		});
 	});
@@ -105,8 +162,7 @@ $(function() {
 					<textarea id="tx-content" placeholder="내용을 입력해 주세요."></textarea>
 					<input type="submit" value="보내기" />
 				</form>
-				<ul id="list-guestbook">
-				</ul>
+				<ul id="list-guestbook"></ul>
 			</div>
 			
 			<div id="dialog-delete-form" title="메세지 삭제" style="display:none">
