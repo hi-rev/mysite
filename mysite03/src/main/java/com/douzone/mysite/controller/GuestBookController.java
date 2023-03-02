@@ -48,4 +48,9 @@ public class GuestBookController {
 		return "redirect:/guestbook/list";
 	}
 	
+	@RequestMapping("/spa")
+	public String indexSPA() {
+		return "guestbook/index-ajax";
+	}
+	
 }
