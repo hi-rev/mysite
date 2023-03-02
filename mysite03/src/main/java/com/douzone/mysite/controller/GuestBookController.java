@@ -48,6 +48,7 @@ public class GuestBookController {
 		return "redirect:/guestbook/list";
 	}
 	
+	// 5. AJAX 방명록 페이지
 	@RequestMapping("/spa")
 	public String indexSPA() {
 		return "guestbook/index-ajax";
