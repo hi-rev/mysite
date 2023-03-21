@@ -80,9 +80,9 @@ export default function Index() {
                 if (!response.ok) {
                     throw `${response.status} ${response.statusText}`;
                 }
-
                 // API success?
                 const json = await response.json();
+                console.log(json.data);
                 if (json.result !== 'success') {
                     throw json.message;
                 }
