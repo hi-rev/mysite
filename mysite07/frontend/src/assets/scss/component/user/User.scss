@@ -1,8 +1,35 @@
 @charset "utf-8";
 
 .User {
-  h2 {
-    text-align:center;
-    line-height: 200px;
+
+  margin:20px auto;	
+  width:540px;
+
+  .joinForm {
+    width:250px;
+    padding:10px;
+    border:1px solid #666;
+    border-radius: 10px;
+    margin:50px auto;
   }
+
+  .loginForm {
+    width:180px;
+    padding:10px;
+    border:1px solid #666;
+    border-radius: 10px;
+    margin:50px auto;
+  }
+
+  p {
+    text-align:center; padding:10px
+  }
+
 }
+
+label.blockLabel					{ display:block }
+label.blockLabel, fieldset			{ margin:5px 0 3px 0 }
+label.blockLabel, fieldset legend	{ margin-bottom:3px }
+
+fieldset				{ border:none }
+input[type="submit"]	{ display:block; width:80px; margin:20px auto }
