@@ -8,10 +8,12 @@
 	<typeAliases>
 		<typeAlias type="me.kickscar.mysite.vo.GuestbookVo" alias="guestbookvo" />
 		<typeAlias type="me.kickscar.mysite.vo.GalleryVo" alias="galleryvo" />
+		<typeAlias type="me.kickscar.mysite.vo.SiteVo" alias="siteVo"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="mybatis/mappers/guestbook.xml" />
 		<mapper resource="mybatis/mappers/gallery.xml" />
+		<mapper resource="mybatis/mappers/site.xml" />
 	</mappers>
 </configuration>
